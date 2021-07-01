@@ -7,8 +7,14 @@ from django.utils import timezone
 from django.urls import reverse
 
 
-def index(request):
-    return render(request,'pasteleria/index.html')
+#views de Meni
+def menu(request):
+    return render(request,'pasteleria/menu.html')
+
+
+
+#def index(request):
+#   return render(request,'pasteleria/index.html')
 
 def agregar_cliente(request):
     listado_comuna = Comuna.objects.all()
