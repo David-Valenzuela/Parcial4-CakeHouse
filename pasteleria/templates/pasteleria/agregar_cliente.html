@@ -1,0 +1,246 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'pasteleria/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pasteleria/css/style_registro.css' %}">
+
+    <title>Cake House Registrar Usuario</title>
+    <link rel="icon" type="image/gif" href="{% static 'pasteleria/img/logo.png' %}">
+
+</head>
+
+<body>
+    <header>
+        <div class="m-t-menu container-fluid">
+          <div class="row">
+            <div class="col-sm-1">
+              <img src="{% static 'pasteleria/img/logo.png' %}" alt="Logo cake house" width="60">
+            </div>
+            <div class="menu col-sm-1">
+              <a class="letra-menu" href="">Menú</a>
+            </div>
+            <div class="menu col-sm-2">
+              <a class="letra-menu" href="#">Login <img class="img-r" src="{% static 'pasteleria/img/man-user.png' %}" alt=""></a>
+            </div>
+            <div class="menu col-sm-2">
+              <a class="letra-menu" href="#">Productos <img class="img-c" src="{% static 'pasteleria/img/carrito.png' %}" alt=""></a>
+            </div>
+            <div class="menu col-sm-2">
+              <a class="letra-menu" href="#">Contáctenos <img class="img-con" src="{% static 'pasteleria/img/contacto.png' %}" alt=""></a>
+            </div>
+            <h5 class=" menu card-title col-sm-2" id="dolar" class="card-text" style="float: right; "></h5>
+            <h5 class=" menu card-title col-sm-2" id="euro" class="card-text" style="float: right; "></h5>
+          </div>
+        </div>
+      </header>
+    
+
+    <!-- REGISTRO -->
+    <div id="titulo" class="container">
+        <h1>Registro Usuario</h1>
+    </div>
+
+    <main>
+      <form id="registro" name="formulario" class="container" action="{% url 'pasteleria:registrar_datos' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group titulos">
+          <img id="imagen_nom" src="{% static 'pasteleria/img/nombre.png' %}" alt="" class="img-icon">
+          <label for="imagen_nom">
+              <h4><b>Datos Personales:</b></h4>
+          </label>
+        </div>
+
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+        <div class="form-row">
+          <!-- RUT CLIENTE -->
+          <div class="form-group col-md-6">
+            <label for="rut">Rut Cliente:</label>
+            <input type="text" class="form-control" id="rut" name="run" placeholder="Ej: 00000000-0" oninput="validarRut(this)">
+            <div id="alert-rut" class="alert alert-light mensaje_alerta" name="alert-rut" role="alert">
+              Debe Ingresar un RUT valido.
+            </div>
+          </div>
+
+          <!-- NOMBRE CLIENTE -->
+          <div class="form-group col-md-6">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" placeholder="Ej: Juan" class="form-control" 
+                    onkeypress="return soloLetras(event)">
+            <div id="alert-nombre" class="alert alert-light mensaje_alerta" role="alert">
+              Debe Completar el Campo Nombre.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">  
+          <!-- APELLIDO PATERNO CLIENTE -->
+          <div class="form-group col-md-6">
+            <label for="paterno"> Apellido Paterno:</label>
+            <input type="text" name="paterno" id="paterno" placeholder="Ej: Rodriguez" class="form-control"
+                  onkeypress="return soloLetras(event)">
+            <div id="alert-p" class="alert alert-light mensaje_alerta" role="alert">
+              Debe Completar los Campos de Apellido.
+            </div>
+          </div>
+          
+          <!-- APELLIDO MATERNO CLIENTE -->
+          <div class="form-group col-md-6">
+            <label for="materno"> Apellido Materno:</label>
+            <input type="text" name="materno" id="materno" placeholder="Ej: Rodriguez" class="form-control"
+                    onkeypress="return soloLetras(event)">
+            <div id="alert-m" class="alert alert-light mensaje_alerta" role="alert">
+              Debe Completar los Campos de Apellido.
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <!-- EMAIL -->
+          <div class="form-group col-md-6">
+            <label for="email">E-Mail:</label>
+            <input type="email" name="email" id="email" placeholder="Ej: cakehouse@gmail.com" class="form-control">
+            <div id="alert-email" class="alert alert-light mensaje_alerta" role="alert">
+              Debe Completar el Campo E-mail.
+            </div>
+          </div>
+          <!-- CELULAR -->
+          <div class="form-group col-md-6">
+            <label for="celular">Celular:</label>
+            <input type="text" name="celular" id="celular" placeholder="Ej: +569" class="form-control" onkeypress="return soloNumeros(event)">
+            <div id="alert-celular" class="alert alert-light mensaje_alerta" role="alert">
+              Debe Completar el Campo Celular.
+            </div>
+          </div>
+        </div>  
+
+        <!--DATOS DE DIRECCIÓN-->
+        <div class="form-group titulos">
+          <img id="imagen_datos" src="{% static 'pasteleria/img/hogar.png' %}" alt="" class="img-icon">
+          <label for="imagen_datos">
+              <h4><b>Datos de Dirección:</b></h4>
+          </label>
+        </div>
+
+        <div class="form-row">
+          <!-- CIUDAD -->
+          <div class="form-group col-md-6">
+            <label for="ciudad">Ciudad:</label>
+            <select name="ciudad" id="ciudad" class="form-control">
+                <option value="">Seleccionar</option>
+                {% for ciu in ciudades %}
+                <option value="{{ciu.id}}">{{ciu.nombre_ciudad }}</option>
+                {% endfor %}
+            </select>
+            <div id="alert-ciu" class="alert alert-light mensaje_alerta" role="alert">
+                Debe Completar el Campo Cuidad.
+             </div>
+          </div>
+
+          <!-- CIUDAD -->
+          <div class="form-group col-md-6">
+            <label for="comuna">Comuna:</label>
+            <select name="comuna" id="comuna" class="form-control">
+                <option value="">Seleccionar</option>
+                {% for c in comunas %}
+                <option value="{{c.id}}">{{c.nombre_comuna }}</option>
+                {% endfor %}
+            </select>
+            <div id="alert-comuna" class="alert alert-light mensaje_alerta" role="alert">
+              Debe Completar el Campo Comuna.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <!-- DIRECCION -->
+          <div class="form-group col-md-6">
+            <label for="direccion">Dirección:</label>
+            <input type="text" name="direccion" id="direccion" placeholder="Ej: Avenida Siempre Viva" class="form-control" onkeypress="return soloLetras(event)">
+            <div id="alert-direc" class="alert alert-light mensaje_alerta" role="alert">
+              Debe Completar el Campo Dirección.
+            </div>
+          </div>
+
+          <!-- NUMERACION -->
+          <div class="form-group col-md-6">
+            <label for="numeracion">Numeración:</label>
+            <input type="number" name="numeracion" id="numeracion" placeholder="Ej: 1234" class="form-control">
+            <div id="alert-num" class="alert alert-light mensaje_alerta" role="alert">
+              Debe Ingresar su Número de Dirección.
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminos y Condiciones -->
+        <div class="form-check form-group">
+          <input class="form-check-input" type="checkbox" value="1" name="termino" id="termino">
+          <label class="form-check-label" for="termino">
+              Aceptar Terminos y Condiciones
+          </label>
+          <div id="alert-term" class="alert alert-light mensaje_alerta" role="alert">
+              Debe Validar los Terminos y Condiciones de Cake House.
+          </div>
+        </div>
+
+        <div class="form-row">
+          <!-- BTN SIGUIENTE -->
+          <div class="form-group col-md-6">
+            <button id="siguiente" type="submit" class="btn btn-outline-secondary btn-lg btn-block btn-estilos"
+                    onclick="return validarFormulario()">Siguiente</button>
+          </div>
+          <!-- BTN LIMPIAR -->
+          <div class="form-group col-md-6"> 
+            <button id="limpiar" type="reset" class="btn btn-outline-secondary btn-lg btn-block btn-estilos">Limpia Formulario</button>
+          </div>
+        </div>
+      </form>      
+    </main>
+
+    <footer class="page-footer font-small">
+      <div class="container">
+        <ul class="list-unstyled list-inline text-right text-center">
+          <img id="logo-footer" src="{% static 'pasteleria/img/logo.png' %}" alt="icon logo">
+          <div class="footer-copyright text-center">
+            <a id="letra" href="#"><p>© 2021 Copyright: Pasteleria Cake House</p></a>
+          </div>
+          <li class="list-inline-item">
+            <a class="btn-floating btn-fb col-sm-1">
+              <p><img class="img-face" src="{% static 'pasteleria/img/incon_face.png' %}" alt="icon facebook"></p>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="btn-floating btn-tw mx-1">
+              <p><img class="img-twitter" src="{% static 'pasteleria/img/icon_twitter.png' %}" alt="icon twitter"></p>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="btn-floating btn-gplus mx-1">
+              <p><img class="img-wha" src="{% static 'pasteleria/img/icon_wha.png' %}" alt="icon whatsapp"></p>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="btn-floating btn-li mx-1">
+              <p><img class="img-ig" src="{% static 'pasteleria/img/icon_ig.png' %}" alt="icon instagram"></p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+    
+    <script src="{% static 'pasteleria/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'pasteleria/js/menu.js' %}"></script>
+    <script src="{% static 'pasteleria/js/funciones_registro.js' %}"></script>
+    <script src="{% static 'pasteleria/js/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html
