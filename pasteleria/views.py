@@ -5,6 +5,7 @@ from django.http import HttpResponse, response, HttpResponseRedirect
 from pasteleria.models import Ciudad, Cliente, Comuna, Producto
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.auth import authenticate, login
 
 
 #views de Meni
@@ -161,10 +162,17 @@ def registrocontraseña(request):
                 return render(request, 'pasteleria/password_cliente.html',context) 
             else:
                 cliente.save()
-                return HttpResponseRedirect(reverse('cliente:index'))
+                return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
         else:
             cliente.save()
-            return HttpResponseRedirect(reverse('cliente:index'))
+            return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
     else:
         cliente.save()
-        return HttpResponseRedirect(reverse('cliente:index'))
+        return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
+
+
+def iniciar_sesion (request):
+     return render(request,'pasteleria/iniciar_sesion.html')
+
+def autenticar_usuario (request):
+    return render(request,'pasteleria/iniciar_sesion.html')

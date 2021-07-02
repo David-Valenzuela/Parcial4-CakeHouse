@@ -51,7 +51,8 @@
     </div>
     <main>
         <!-- Grupo Contraseñas -->
-        <form class="container" name="registro" id="register-form" action="loginindex.html" method="post">
+        <form class="container" name="registro" id="register-form" action="{% url 'pasteleria:iniciar_sesion' %}" method="POST">
+            {% csrf_token %}
             <!-- Pass 1 -->
             <div class="form-group">
                 <!-- password=incognita  text=Muestra la clave -->
