@@ -108,17 +108,6 @@ $(document).ready(function validarPassword() {
 
     });
 
-    /* Registro */  
-    $("#formulario").on("mouseover", function () {
-        $(this).css({
-            "box-shadow":"0 0 30px rgb(0,0,0,0.568)"
-        });
-    });
-    $("#formulario").on("mouseleave", function () {
-        $(this).css({
-            "box-shadow": ""
-        });
-    });
 });
 
 
