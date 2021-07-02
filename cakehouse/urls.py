@@ -13,10 +13,25 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from pasteleria.models import Ciudad
 from django.contrib import admin
 from django.urls import include, path
+from django.contrib.auth.models import User
+from rest_framework import routers, serializers, viewsets
+from cakehouse import views
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+router.register(r'ciudades', views.CiudadViewSet)
+router.register(r'comunas', views.ComunaViewSet)
+router.register(r'productos', views.ProductoViewSet)
+router.register(r'clientes', views.ClienteViewSet)
 
 urlpatterns = [
     path('pasteleria/', include('pasteleria.urls')),
     path('admin/', admin.site.urls),
+
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
