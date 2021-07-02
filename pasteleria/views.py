@@ -186,4 +186,3 @@ def autenticar_usuario (request):
         #return HttpResponseRedirect(reverse('panaderia:index'))
     else:
         return HttpResponse("No se pudo autenticar")
-menu 
