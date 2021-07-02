@@ -118,11 +118,11 @@ def registrar_datos(request):
             'ciudades':listado_ciudad})   
     if estado == True:
         carrito = {'run':run,'nombre':nombre,'ap_paterno':paterno,'ap_materno':materno,'email':email,'celular':celular,'direccion':direccion,'numeracion':num,'comuna':comuna, 'ciudad':ciudad,'id_ciudad':id_ciudad,'id_comuna':id_comuna}
-        return render(request,'pasteleria/registrarcontraseña.html',carrito)
+        return render(request,'pasteleria/registro_clave.html',carrito)
 
 
 #Registro Contraseña
-def registrocontraseña(request):
+def registro_clave(request):
     run = request.POST['run']
     nombre = request.POST['nombre']
     paterno = request.POST['paterno']
@@ -141,7 +141,7 @@ def registrocontraseña(request):
         password1 = request.POST['password']
         password2 = request.POST['password2']
     else:
-        return render(request, 'pasteleria/registrocontraseña.html', context) 
+        return render(request, 'pasteleria/registro_clave.html', context) 
 
     caracters_pass = len(password1)
 
@@ -157,7 +157,7 @@ def registrocontraseña(request):
     if caracters_pass <= 12:
         if caracters_pass >= 6:    
             if password1 != password2:
-                return render(request, 'pasteleria/password_cliente.html',context) 
+                return render(request, 'pasteleria/registro_clave.html',context) 
             else:
                 cliente.save()
                 return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
