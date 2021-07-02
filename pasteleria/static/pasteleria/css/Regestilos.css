@@ -1,0 +1,147 @@
+* {
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'New Tegomin';
+    font-size: 13pt;
+    padding-top: 0%;
+    margin-top: 0%;
+    pad: 0;
+    margin: 0%;
+    background-color: #f6d1de ;
+}
+
+/* Cuadrados de alerta */
+main {
+    max-width: 900px;
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+}
+
+/* Menu */
+.m-t-menu {
+    text-align: center;
+    background:#f3a8c2;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.menu {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.img-r {
+    height: 20px;
+}
+
+.img-c {
+    height: 20px;
+}
+
+.img-con {
+    height: 20px;
+}
+
+.letra-menu {
+    color: #000;
+}
+
+.letra-menu:hover {
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+/* Cuerpo de la Pagina */
+/* Titulo */
+#titulo {
+    margin-top: 5px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #f6d1de;
+    color: #000;
+	margin-bottom: 20px;
+}
+
+#register-form {
+    overflow: auto;
+    border-radius: 10px; 
+    border: solid 2px #000;
+	background-color: #f1f1f1;
+    color: #000;
+    padding: 10px;
+    margin-bottom: 200px;
+}
+
+
+
+
+/* Estilo Alerta */
+.mensaje_alerta {
+    visibility: hidden;
+    background-color: transparent;
+    border: rgb(255, 255, 255);
+    color: rgb(255, 0, 0);
+    font-size: 14pt;
+	font-family:Arial;
+	height: 20px;
+    margin-top: 5px;
+    padding: 0;
+}
+/* Candado */
+.icon {
+	width: 20px;
+	margin: 0%;
+
+}
+
+
+.btn-estilos{
+    color: #000;
+}
+
+
+/* Footer */
+.img-face {
+    width: 40px;
+    height: 40px;
+}
+
+.img-twitter {
+    width: 40px;
+    height: 40px;
+}
+
+.img-wha {
+    width: 40px;
+    height: 40px;
+}
+
+.img-ig {
+    width: 40px;
+    height: 40px;
+
+}
+
+#logo-footer {
+    background-color: #f3a8c2;
+    height: 100px;
+    width: 100px;
+    padding: 10px;
+    float: left;
+}
+
+footer {
+    background-color: #f3a8c2;
+    border: 2px solid white;
+}
+
+.footer-copyright {
+    padding: 50px;
+}
+
+#letra {
+    color: #000;
+}

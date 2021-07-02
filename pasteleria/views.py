@@ -119,4 +119,52 @@ def registrar_datos(request):
             'ciudades':listado_ciudad})   
     if estado == True:
         carrito = {'run':run,'nombre':nombre,'ap_paterno':paterno,'ap_materno':materno,'email':email,'celular':celular,'direccion':direccion,'numeracion':num,'comuna':comuna, 'ciudad':ciudad,'id_ciudad':id_ciudad,'id_comuna':id_comuna}
-        return render(request,'pasteleria/password_cliente.html',carrito)
+        return render(request,'pasteleria/registrarcontraseña.html',carrito)
+
+
+#Registro Contraseña
+def registrocontraseña(request):
+    run = request.POST['run']
+    nombre = request.POST['nombre']
+    paterno = request.POST['paterno']
+    materno = request.POST['materno']
+    email = request.POST['email']
+    celular = request.POST['celular']
+    direccion = request.POST['direccion']
+    num = request.POST['numeracion']
+    id_ciudad = request.POST['ciudad']
+    id_comuna = request.POST['comuna']
+    ciudad = Ciudad.objects.get(pk = request.POST['ciudad'])
+    comuna = Comuna.objects.get(pk = request.POST['comuna'])
+    context = {'error':"Contraseña incorrecta, debe tener minimo 6 caracteres y maximo 12.",'error_password':"Ambas contraseñas deben ser iguales.",'run':run,'nombre':nombre,'ap_paterno':paterno,'ap_materno':materno,'email':email,'celular':celular,'direccion':direccion,'numeracion':num,'comuna':comuna, 'ciudad':ciudad,'id_ciudad':id_ciudad,'id_comuna':id_comuna}
+
+    if request.POST['password'].strip() != "":
+        password1 = request.POST['password']
+        password2 = request.POST['password2']
+    else:
+        return render(request, 'pasteleria/registrocontraseña.html', context) 
+
+    caracters_pass = len(password1)
+
+    ciu = Ciudad.objects.get(id = id_ciudad)
+    com = Comuna.objects.get(id = id_comuna)
+    fecha_hora = timezone.now()
+
+    cliente = Cliente(run_cliente = run, nombre = nombre, ap_paterno = paterno, ap_materno = materno, 
+                    email = email, celular = celular, direccion = direccion, numeracion = num, password = password1 ,fecha_cliente = fecha_hora)
+    cliente.comuna = com
+    cliente.ciudad = ciu
+
+    if caracters_pass <= 12:
+        if caracters_pass >= 6:    
+            if password1 != password2:
+                return render(request, 'pasteleria/password_cliente.html',context) 
+            else:
+                cliente.save()
+                return HttpResponseRedirect(reverse('cliente:index'))
+        else:
+            cliente.save()
+            return HttpResponseRedirect(reverse('cliente:index'))
+    else:
+        cliente.save()
+        return HttpResponseRedirect(reverse('cliente:index'))

@@ -1,0 +1,178 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'pasteleria/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pasteleria/css/Regestilos.css' %}">
+    <title>Cake House Menú</title>
+    <link rel="icon" type="image/gif" href="{% static 'pasteleria/img/logo.png' %}">
+</head>
+
+<body>
+    <!--Encabezado Pagina Global-->
+    <!--MENU PAGINA-->
+    <header>
+        <div class="m-t-menu container-fluid">
+            <div class="row">
+                <div class="col-sm-1">
+                    <img src="{% static 'pasteleria/img/logo.png'%}" alt="Logo cake house" width="60">
+                </div>
+                <div class="menu col-sm-1">
+                    <a class="letra-menu" href="Menu.html">Menú</a>
+                </div>
+                <div class="menu col-sm-2">
+                    <a class="letra-menu" href="{% url 'pasteleria:agregar_cliente' %}">Registrar Cliente</a> <img
+                        class="img-r" src="{% static 'pasteleria/img/man-user.png'%}" alt=""></a>
+                </div>
+                <div class="menu col-sm-2">
+                    <a class="letra-menu" href="">Productos <img class="img-c"
+                            src="{% static 'pasteleria/img/carrito.png'%}" alt=""></a>
+                </div>
+                <div class="menu col-sm-2">
+                    <a class="letra-menu" href="">Contáctenos <img class="img-con"
+                            src="{% static 'pasteleria/img/contacto.png'%}" alt=""></a>
+                </div>
+                <h5 class=" menu card-title col-sm-2" id="dolar" class="card-text" style="float: right; "></h5>
+                <h5 class=" menu card-title col-sm-2" id="euro" class="card-text" style="float: right; "></h5>
+            </div>
+        </div>
+    </header>
+    <!--MENU PAGINA-->
+
+    <!-- Grupo Contraseña -->
+    <div id="titulo" class="container">
+        <h1>Registro Usuario Contraseña</h1>
+    </div>
+    <main>
+        <!-- Grupo Contraseñas -->
+        <form class="container" name="registro" id="register-form" action="loginindex.html" method="post">
+            <!-- Pass 1 -->
+            <div class="form-group">
+                <!-- password=incognita  text=Muestra la clave -->
+                <img src="{% static 'pasteleria/img/candado.png' %}" alt="candado" id="img" class="icon">
+                <label for="img">
+                    <h4><b>Ingrese su Contraseña:</b></h4>
+                </label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña"
+                    oninput="validarClave()">
+                <!-- Alerta -->
+                <div class="alert alert-light mensaje_alerta" role="alert" id="alert-pass1">
+                    Revisa el Campo Contraseña
+                </div>
+            </div>
+            <!-- Pass 2 -->
+            <div class="form-group">
+                <!-- password=incognita  text=Muestra la clave -->
+                <img src="{% static 'pasteleria/img/candado.png' %}" alt="candado" id="img2" class="icon">
+                <label for="img">
+                    <h4><b>Confirme su Contraseña:</b></h4>
+                </label>
+                <input type="password" name="password2" id="password2" class="form-control"
+                    placeholder="Confirmar Contraseña">
+                <!-- Alerta -->
+                <div class="alert alert-primary mensaje_alerta" role="alert" id="alert-pass2">
+                    Revisa el Campo Repita Contraseña
+                </div>
+            </div>
+
+            <!-- Mostrar Contraseña -->
+            <div class="form-group">
+                <input type="checkbox" id="mostrar" onclick="myFunction(password)">
+                <label for="mostrar">Mostrar Contraseña</label>
+            </div>
+
+            <!-- Btn Siguiente -->
+            <div class="form-group">
+                <div class="container">
+                    <button name="btninicio" id="siguiente" type="submit"
+                        class="btn btn-outline-secondary btn-lg btn-block btn-estilos">Siguiente</button>
+                </div>
+            </div>
+            <!-- Btn Limpiar -->
+            <div class="container">
+                <button id="limpiar" type="reset" class="btn btn-outline-secondary btn-lg btn-block btn-estilos">Limpiar
+                    Formulario</button>
+            </div>
+            {% if run and nombre and ap_paterno and ap_materno and email and celular and direccion and numeracion%}
+
+            <input type="hidden" name="run" id="run" value="{{run}}">
+
+            <input type="hidden" name="nombre" id="nombre" value="{{nombre}}">
+
+            <input type="hidden" name="paterno" id="paterno" value="{{ap_paterno}}">
+
+            <input type="hidden" name="materno" id="materno" value="{{ap_materno}}">
+
+            <input type="hidden" name="email" id="email" value="{{email}}">
+
+            <input type="hidden" name="celular" id="celular" value="{{celular}}">
+
+            <input type="hidden" name="direccion" id="direccion" value="{{direccion}}">
+
+            <input type="hidden" name="numeracion" id="numeracion" value="{{numeracion}}" min="1">
+            {% endif%}
+            {% if comuna and ciudad and id_ciudad and id_comuna%}
+            <select name="ciudad" id="ciudad" hidden>
+                <option value="{{id_ciudad}}">{{ciudad}}</option>
+            </select>
+            <select name="comuna" id="comuna" hidden>
+                <option value="{{id_comuna}}">{{comuna}}</option>
+            </select>
+            {% endif %}
+        </form>
+
+    </main>
+
+
+
+    <!-- Footer -->
+    <footer class="page-footer font-small">
+        <div class="container-fluid">
+            <ul class="list-unstyled list-inline text-right text-center">
+
+                <a href=""><img id="logo-footer" src="{% static 'pasteleria/img/logo.png'%}" alt="icon logo"></a>
+                <div class="footer-copyright text-center">
+                    <a id="letra" href="#">
+                        <p>© 2021 Copyright: Pasteleria Cake House</p>
+                    </a>
+                </div>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-fb col-sm-1">
+                        <p><img class="img-face" src="{% static 'pasteleria/img/incon_face.png'%}" alt="icon facebook">
+                        </p>
+                    </a>
+                </li>
+                <li class="list-inline-item ">
+                    <a class="btn-floating btn-tw mx-1">
+                        <p><img class="img-twitter" src="{% static 'pasteleria/img/icon_twitter.png'%}"
+                                alt="icon twitter"></p>
+                    </a>
+                </li>
+                <li class="list-inline-item ">
+                    <a class="btn-floating btn-gplus mx-1">
+                        <p><img class="img-wha" src="{% static 'pasteleria/img/icon_wha.png'%}" alt="icon whatsapp"></p>
+                    </a>
+                </li>
+                <li class="list-inline-item ">
+                    <a class="btn-floating btn-li mx-1">
+                        <p><img class="img-ig" src="{% static 'pasteleria/img/icon_ig.png'%}" alt="icon instagram"></p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    <!-- Footer -->
+
+    <script src="{% static 'pasteleria/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'pasteleria/js/menu.js' %}"></script>
+    <script src="{% static 'pasteleria/js/contraseña.js' %}"></script>
+    <script src="{% static 'pasteleria/js/bootstrap.min.js' %}"></script>
+</body>
+
+</html
