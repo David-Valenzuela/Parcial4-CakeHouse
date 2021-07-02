@@ -10,7 +10,9 @@ from django.contrib.auth import authenticate, login
 
 #views de Meni
 def menu(request):
-    return render(request,'pasteleria/menu.html')
+    listado_producto = Producto.objects.all()
+    context = {'listado_producto':listado_producto}
+    return render(request,'pasteleria/menu.html',context)
 
 
 def agregar_cliente(request):

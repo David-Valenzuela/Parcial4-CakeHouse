@@ -105,10 +105,8 @@ $(document).ready(function validarPassword() {
                 "visibility": "hidden"
             });
         };
-
     });
 });
-
 
 //jsmoneda
 $(document).ready(function () {
