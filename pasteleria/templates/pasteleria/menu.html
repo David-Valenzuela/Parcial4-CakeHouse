@@ -26,7 +26,12 @@
           <a class="letra-menu" href="{% url 'pasteleria:menu' %}">Menú</a>
         </div>
         <div class="menu col-sm-2">
-          <a class="letra-menu" href="{% url 'pasteleria:iniciar_sesion' %}">Login</a> <img class="img-r"
+          {% if sesion %}
+          <a class="letra-menu" href="{% url 'pasteleria:cerrar_sesion' %}">{{sesion}} 
+            {% else %}
+            <a class="letra-menu" href="{% url 'pasteleria:iniciar_sesion' %}">Login
+            {%endif%}
+          </a> <img class="img-r"
             src="{% static 'pasteleria/img/man-user.png'%}" alt=""></a>
         </div>
         <div class="menu col-sm-2">

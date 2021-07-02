@@ -10,4 +10,5 @@ urlpatterns = [
 
     path('iniciar_sesion', views.iniciar_sesion, name='iniciar_sesion'),
     path('autenticar_usuario', views.autenticar_usuario, name='autenticar_usuario'),
+    path('cerrar_sesion', views.cerrar_sesion, name='cerrar_sesion'),
 ]

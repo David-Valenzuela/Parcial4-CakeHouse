@@ -51,7 +51,7 @@
     </div>
     <main>
         <!-- Grupo Contraseñas -->
-        <form class="container" name="registro" id="register-form" action="{% url 'pasteleria:iniciar_sesion' %}" method="POST">
+        <form class="container" name="registro" id="register-form" action="{% url 'pasteleria:registro_clave' %}" method="POST">
             {% csrf_token %}
             <!-- Pass 1 -->
             <div class="form-group">

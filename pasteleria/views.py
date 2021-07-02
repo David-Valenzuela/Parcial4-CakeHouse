@@ -3,16 +3,21 @@ from django import http
 from django.shortcuts import render
 from django.http import HttpResponse, response, HttpResponseRedirect
 from pasteleria.models import Ciudad, Cliente, Comuna, Producto
+from django.contrib.auth.models import Permission, User
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 
 
 #views de Meni
 def menu(request):
-    listado_producto = Producto.objects.all()
-    context = {'listado_producto':listado_producto}
-    return render(request,'pasteleria/menu.html',context)
+    if request.user.is_authenticated:
+        listado_producto = Producto.objects.all()
+        context = {'listado_producto':listado_producto,'sesion':'Cerrar sesión'}
+        return render(request,'pasteleria/menu.html',context)
+    else:
+       return render(request,'pasteleria/menu.html')
 
 
 def agregar_cliente(request):
@@ -180,9 +185,11 @@ def autenticar_usuario (request):
 
     if user is not None:
         login(request, user)
-        #return HttpResponse(user.username)
-        nombre = user.first_name + " " + user.last_name
-        return HttpResponse(nombre)
-        #return HttpResponseRedirect(reverse('panaderia:index'))
+        return HttpResponseRedirect(reverse('pasteleria:menu'))
     else:
-        return HttpResponse("No se pudo autenticar")
+        return render(request, 'pasteleria/iniciar_sesion.html', {
+            'error_message': "Rut o Contraseña incorrectos"}) 
+
+def cerrar_sesion(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
