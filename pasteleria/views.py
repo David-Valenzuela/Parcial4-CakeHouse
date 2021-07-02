@@ -165,14 +165,31 @@ def registro_clave(request):
                 return render(request, 'pasteleria/registro_clave.html',context) 
             else:
                 cliente.save()
+                permiso = Permission.objects.get(name='Es comprador')
+                user = User.objects.create_user(run,email,password1)
+                user.first_name = nombre
+                user.last_name = paterno
+                user.user_permissions.add(permiso)
+                user.save()
                 return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
         else:
             cliente.save()
+            permiso = Permission.objects.get(name='Es comprador')
+            user = User.objects.create_user(run,email,password1)
+            user.first_name = nombre
+            user.last_name = paterno
+            user.user_permissions.add(permiso)
+            user.save()
             return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
     else:
         cliente.save()
+        permiso = Permission.objects.get(name='Es comprador')
+        user = User.objects.create_user(run,email,password1)
+        user.first_name = nombre
+        user.last_name = paterno
+        user.user_permissions.add(permiso)
+        user.save()
         return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
-
 
 def iniciar_sesion (request):
      return render(request,'pasteleria/iniciar_sesion.html')
