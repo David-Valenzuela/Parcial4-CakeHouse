@@ -13,10 +13,6 @@ def menu(request):
     return render(request,'pasteleria/menu.html')
 
 
-
-#def index(request):
-#   return render(request,'pasteleria/index.html')
-
 def agregar_cliente(request):
     listado_comuna = Comuna.objects.all()
     listado_ciudad = Ciudad.objects.all()
@@ -175,4 +171,17 @@ def iniciar_sesion (request):
      return render(request,'pasteleria/iniciar_sesion.html')
 
 def autenticar_usuario (request):
-    return render(request,'pasteleria/iniciar_sesion.html')
+    usuario = request.POST['rut']
+    clave= request.POST['password']
+
+    user = authenticate(request, username=usuario, password=clave)
+
+    if user is not None:
+        login(request, user)
+        #return HttpResponse(user.username)
+        nombre = user.first_name + " " + user.last_name
+        return HttpResponse(nombre)
+        #return HttpResponseRedirect(reverse('panaderia:index'))
+    else:
+        return HttpResponse("No se pudo autenticar")
+menu 
