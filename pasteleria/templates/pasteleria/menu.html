@@ -133,7 +133,7 @@
         <div class="col mb-4">
           <div class="card">
             {% if p.id == 1 %}
-            <img src="{% static 'pasteleria/img/Pastel_cafe1.jpeg'%}" class="card-img-top"
+            <img src="{% static 'pasteleria/img/Pastel_cafe1.png'%}" class="card-img-top"
               alt="no se enconto la imagen del producto">
             {%endif%}
             {% if p.id == 2 %}
@@ -151,7 +151,7 @@
             </div>
             <div class="card-footer">
              <small>
-               <form action="">
+               <form action="{% url 'pasteleria:producto' p.id %}">
                  {% csrf_token %}
                  <button type="submit" class="btn btn-outline-secondary btn-lg btn-block btn-estilos" >Comprar Producto</button>
                </form>

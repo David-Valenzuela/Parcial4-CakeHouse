@@ -210,3 +210,9 @@ def autenticar_usuario (request):
 def cerrar_sesion(request):
     logout(request)
     return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
+
+#Producto
+def producto(request):
+    
+    return HttpResponse('hola')
+    
