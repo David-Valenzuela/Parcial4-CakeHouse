@@ -1,6 +1,7 @@
 import datetime
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext as _
 
 class Comuna(models.Model):
     nombre_comuna = models.CharField(max_length=200)
@@ -40,6 +41,12 @@ class Cliente(models.Model):
 
     def was_published_recently(self):
         return self.pub_fecha >= timezone.now() - datetime.timedelta(days=1)
+
+    class Meta:
+        permissions = (
+            ('comprador',_('Es comprador' )),
+        )
+
 
 
 class Producto(models.Model):
