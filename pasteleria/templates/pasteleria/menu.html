@@ -27,16 +27,15 @@
         </div>
         <div class="menu col-sm-2">
           {% if sesion %}
-          <a class="letra-menu" href="{% url 'pasteleria:cerrar_sesion' %}">{{sesion}} 
+          <a class="letra-menu" href="{% url 'pasteleria:cerrar_sesion' %}">{{sesion}}
             {% else %}
             <a class="letra-menu" href="{% url 'pasteleria:iniciar_sesion' %}">Login
-            {%endif%}
-          </a> <img class="img-r"
-            src="{% static 'pasteleria/img/man-user.png'%}" alt=""></a>
+              {%endif%}
+            </a> <img class="img-r" src="{% static 'pasteleria/img/man-user.png'%}" alt=""></a>
         </div>
         <div class="menu col-sm-2">
-          <a class="letra-menu" href="http://localhost:8000/api/">Api-Cakehouse <img class="img-c" src="{% static 'pasteleria/img/carrito.png'%}"
-              alt=""></a>
+          <a class="letra-menu" href="http://localhost:8000/api/">Api-Cakehouse <img class="img-c"
+              src="{% static 'pasteleria/img/carrito.png'%}" alt=""></a>
         </div>
         <div class="menu col-sm-2">
           <a class="letra-menu" href="">Contáctenos <img class="img-con" src="{% static 'pasteleria/img/contacto.png'%}"
@@ -127,30 +126,37 @@
   <!--DESTACOS DEL-->
   {% if listado_producto %}
   <div class="container">
-    <div class="card-deck  row row-cols-1 row-cols-md-3 g-4">
+    <div class="card-deck">
       <legend class="titulo-mark">Pateles destacados del mes</legend>
-      <div class="col">
+      <div class="row row-cols-1 row-cols-md-3">
         {% for p in listado_producto %}
-        <div class="card h-10">
-          {% if p.id == 1 %}
-          <img src="{% static 'pasteleria/img/Pastel_cafe1.jpeg'%}" class="card-img-top"
-            alt="no se enconto la imagen del producto">
-          {%endif%}
-          {% if p.id == 2 %}
-          <img src="{% static 'pasteleria/img/pastel_crema.jpeg'%}" class="card-img-top"
-            alt="no se enconto la imagen del producto">
-          {%endif%}
-          {% if p.id == 3 %}
-          <img src="{% static 'pasteleria/img/pastel_frutilla.jpeg'%}" class="card-img-top"
-            alt="no se enconto la imagen del producto">
-          {%endif%}
-          <div class="card-body">
-            <h5 class="card-title">{{p.nombre_producto}} </h5>
-            <p class="card-text">{{p.descripcion}}</p>
-            <p>${{p.precio}}</p>
-          </div>
-          <div class="card-footer">
-            <button>comprar</button>
+        <div class="col mb-4">
+          <div class="card">
+            {% if p.id == 1 %}
+            <img src="{% static 'pasteleria/img/Pastel_cafe1.jpeg'%}" class="card-img-top"
+              alt="no se enconto la imagen del producto">
+            {%endif%}
+            {% if p.id == 2 %}
+            <img src="{% static 'pasteleria/img/pastel_crema.jpeg'%}" class="card-img-top"
+              alt="no se enconto la imagen del producto">
+            {%endif%}
+            {% if p.id == 3 %}
+            <img src="{% static 'pasteleria/img/pastel_frutilla.jpeg'%}" class="card-img-top"
+              alt="no se enconto la imagen del producto">
+            {%endif%}
+            <div class="card-body">
+              <h5 class="card-title">{{p.nombre_producto}} </h5>
+              <p class="card-text">{{p.descripcion}}</p>
+              <p>${{p.precio}}</p>
+            </div>
+            <div class="card-footer">
+             <small>
+               <form action="">
+                 {% csrf_token %}
+                 <button type="submit" class="btn btn-outline-secondary btn-lg btn-block btn-estilos" >Comprar Producto</button>
+               </form>
+             </small>
+            </div>
           </div>
         </div>
         {% endfor %}
