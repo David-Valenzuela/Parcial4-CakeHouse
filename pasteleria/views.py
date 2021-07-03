@@ -216,10 +216,21 @@ def producto(request,producto_id):
     if request.user.has_perm('pasteleria.comprador'):
         p = Producto.objects.get(id=producto_id)
         context = {'producto':p,'sesion':'Cerrar sesión'}
-        return render(request,'pasteleria/pago.html',context)
+        return render(request,'pasteleria/producto.html',context)
     else:
         p = Producto.objects.get(id=producto_id)
         context = {'producto':p,'mensaje_prod':'Debe iniciar sesión o registrarse para proceder con la compra.'}
-        return render(request,'pasteleria/pago.html',context)   
+        return render(request,'pasteleria/producto.html',context)  
+
+def pago(request,producto_id):
+    if request.user.has_perm('pasteleria.comprador'):
+        p = Producto.objects.get(id=producto_id)
+        context = {'producto':p,'sesion':'Cerrar sesión'}
+        return render(request,'pasteleria/producto.html',context)
+    else:
+        p = Producto.objects.get(id=producto_id)
+        context = {'producto':p,'mensaje_prod':'Debe iniciar sesión o registrarse para proceder con la compra.'}
+        return render(request,'pasteleria/producto.html',context)  
+
     
     
