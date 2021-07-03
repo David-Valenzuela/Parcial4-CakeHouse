@@ -99,6 +99,7 @@
                 <div id="alerta" class="alert alert-light" role="alert">
                   {{mensaje_prod}}
                 </div>
+                {% endif %}
                 <div class="form-row">
                   <div class="form-group col-sm-6">
                     <label for="und">Unidades:</label>
@@ -107,6 +108,7 @@
                       Debe Ingresar desde 1 unidad hasta 5 unidades.
                     </div>
                   </div>
+                  {% if mensaje_prod %}
                   <div class="form-group col-sm-6">
                     <button id="comprar" type="submit" class="btn btn-outline-secondary" disabled>Comprar</button>
                   </div>

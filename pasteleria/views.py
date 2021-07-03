@@ -213,8 +213,13 @@ def cerrar_sesion(request):
 
 #Producto
 def producto(request,producto_id):
-    p = Producto.objects.get(id=producto_id)
-    context = {'producto':p}
-    return render(request,'pasteleria/pago.html',context)
+    if request.user.has_perm('pasteleria.comprador'):
+        p = Producto.objects.get(id=producto_id)
+        context = {'producto':p,'sesion':'Cerrar sesión'}
+        return render(request,'pasteleria/pago.html',context)
+    else:
+        p = Producto.objects.get(id=producto_id)
+        context = {'producto':p,'mensaje_prod':'Debe iniciar sesión o registrarse para proceder con la compra.'}
+        return render(request,'pasteleria/pago.html',context)   
     
     
