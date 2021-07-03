@@ -12,4 +12,5 @@ urlpatterns = [
     path('autenticar_usuario', views.autenticar_usuario, name='autenticar_usuario'),
     path('cerrar_sesion', views.cerrar_sesion, name='cerrar_sesion'),
     path('<int:producto_id>', views.producto, name='producto'),
+    path('<int:producto_id>/pago/', views.pago, name='pago'),
 ]
