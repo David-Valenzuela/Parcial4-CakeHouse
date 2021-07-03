@@ -105,6 +105,10 @@ body{
     height: auto;
     width:  auto;
 }
+.n-stock{
+    text-align: center;
+    font-size: 12pt;
+}
 /*pasteles destacados del mes*/
 
 /*sub titulo*/
