@@ -1,0 +1,244 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'pasteleria/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'pasteleria/css/estilospago.css' %}">
+  <title>Cake House Menú</title>
+  <link rel="icon" type="image/gif" href="{% static 'pasteleria/img/logo.png' %}">
+</head>
+
+<body>
+  <!-- Menu superior -->
+  <header>
+    <div class="m-t-menu container-fluid">
+      <div class="row">
+        <div class="col-sm-1">
+          <img src="{% static 'pasteleria/img/logo.png' %}" alt="Logo cake house" width="60">
+        </div>
+        <div class="menu col-sm-1">
+          <a class="letra-menu" href="{% url 'pasteleria:menu' %}">Menú</a>
+        </div>
+        <div class="menu col-sm-2">
+            {% if sesion %}
+            <a class="letra-menu" href="{% url 'pasteleria:cerrar_sesion' %}">{{sesion}}
+              {% else %}
+              <a class="letra-menu" href="{% url 'pasteleria:iniciar_sesion' %}">Login
+                {%endif%}
+              </a> <img class="img-r" src="{% static 'pasteleria/img/man-user.png'%}" alt=""></a>
+        </div>
+        <div class="menu col-sm-2">
+            <a class="letra-menu" href="http://localhost:8000/api/">Api-Cakehouse <img class="img-c"
+                src="{% static 'pasteleria/img/carrito.png'%}" alt=""></a>
+        </div>
+        <div class="menu col-sm-2">
+          <a class="letra-menu" href="#">Contáctenos <img class="img-con" src="{% static 'pasteleria/img/contacto.png' %}" alt=""></a>
+        </div>
+        <h5 class=" menu card-title col-sm-2" id="dolar" class="card-text" style="float: right; "></h5>
+        <h5 class=" menu card-title col-sm-2" id="euro" class="card-text" style="float: right; "></h5>
+      </div>
+    </div>
+  </header>
+  {%if producto%}
+  <!-- Titulo de Pastel -->
+  <div id="titulo" class="container-fluid">
+    <h1>Proceso de Pago</h1>
+  </div>
+
+  <div class="alert alert-secondary container" role="alert">
+    <p><img src="{% static 'pasteleria/img/danger-sing.png' %}" alt="danger.png" width="20"><b> Por el estado de emergencia actual de nuestro
+        país, los pedidos solo se entregaran dentro de la Region Metropolitana. ¡Muchas Gracias!</b></p>
+  </div>
+
+  <!-- Detalle Pastel -->
+  <main>
+    <div id="producto" class="card mb-3 container">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+          {% if producto.id == 1%}
+          <img id="imagen" src="{% static 'pasteleria/img/Pastel_cafe2.jpeg' %}" class="card-img" alt="Pastel chocolate">
+          {% endif %}
+          {% if producto.id == 2%}
+          <img id="imagen" src="{% static 'pasteleria/img/pastel_crema.jpeg' %}" class="card-img" alt="Pastel chocolate">
+          {% endif %}
+          {% if producto.id == 3%}
+          <img id="imagen" src="{% static 'pasteleria/img/pastel_frutilla.jpeg' %}" class="card-img" alt="Pastel chocolate">
+          {% endif %}
+          <h4 id="valor" class="text-muted">{{producto.nombre_producto}}</h4>
+          <h4 id="valor" class="text-muted">Valor: ${{producto.precio}}/CLP</h4>
+        </div>
+        <div class="col-md-8">
+          <form action="{% url 'pasteleria:ingresar_pago' %}" id="formulario" name="formulario" method="post">
+            {% csrf_token %}
+            <h4><b>Datos de Envio:</b></h4>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: Juan"
+                  onkeypress="return soloLetras(event)">
+                <div id="a-nombre" class="alert alert-light mensaje_alerta" role="alert">
+                  Debe Ingresar un Nombre Valido.
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="apellido">Apellido Paterno:</label>
+                <input type="text" class="form-control" id="apellido" name="paterno" placeholder="Ej: Rodriguez"
+                  onkeypress="return soloLetras(event)">
+                <div id="a-apellido" class="alert alert-light mensaje_alerta" role="alert">
+                  Debe Ingresar un Apellido Valido.
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="materno">Apellido Materno:</label>
+                <input type="text" class="form-control" id="materno" name="materno" placeholder="Ej: Perez"
+                  onkeypress="return soloLetras(event)">
+                <div id="m-apellido" class="alert alert-light mensaje_alerta" role="alert">
+                  Debe Ingresar un Apellido Valido.
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4 ">
+                <label for="direc">Dirección:</label>
+                <input type="text" class="form-control" id="direc" name="direccion" placeholder="Ej: Los Naranjos"
+                  onkeypress="return soloLetras(event)">
+                <div id="a-direc" class="alert alert-light mensaje_alerta" role="alert">
+                  Debe Ingresar una Dirección Valida.
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="num">Numero de Dirección:</label>
+                <input type="number" class="form-control" id="num" name="num" placeholder="Ej: 1234">
+                <div id="a-num" class="alert alert-light mensaje_alerta" role="alert">
+                  Debe Ingresar su Numero de Dirección.
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="celular">Celular (formato +569)</label>
+                <input type="text" class="form-control" id="celular" name="celular" placeholder="Ej: +569"
+                  onkeypress="return soloNumeros(event)">
+                <div id="a-celular" class="alert alert-light mensaje_alerta" role="alert">
+                  Debe Ingresar su Número Celular correctamente.
+                </div>
+              </div>
+            </div>
+            <h4><b>Formulario de pago:</b></h4>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="name">Nombre:</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Ej: Juan Lopez"
+                  onkeypress="return soloLetras(event)">
+                <div id="a-name" class="alert alert-light mensaje_alerta" role="alert">
+                  Debe Ingresar el Nombre del Propietario de la Tarjeta.
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="email">E-Mail</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Ej: cakehouse@gmail.com">
+                <div id="a-email" class="alert alert-light mensaje_alerta" role="alert">
+                  Debe Ingresar Todos los datos del E-mail correctamente.
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="ccnum">Número de la tarjeta</label>
+                <input type="text" id="ccnum" name="cardnumber" class="form-control" placeholder="1111-2222-3333-4444"
+                  onkeypress="return soloNumeros(event)">
+                <div id="a-tarj" class="alert alert-light mensaje_alerta" role="alert">
+                  Debe Ingresar su Número de Tarje de 16 Digitos correctamente.
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="expmonth">Mes de expiración</label>
+                <input type="number" id="expmonth" name="expmonth" placeholder="03" class="form-control"
+                  onkeypress="return soloNumeros(event)">
+                <div id="a-mes" class="alert alert-light mensaje_alerta" role="alert">
+                  Ingrese un Mes valido, 1 a 12 Meses.
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="expyear">Año de expiración</label>
+                <input type="text" id="expyear" name="expyear" placeholder="2027" class="form-control"
+                  onkeypress="return soloNumeros(event)">
+                <div id="a-year" class="alert alert-light mensaje_alerta" role="alert">
+                  Ingrese un Año Correcto.
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="111" class="form-control"
+                  onkeypress="return soloNumeros(event)">
+                <div id="a-cvv" class="alert alert-light mensaje_alerta" role="alert">
+                  Ingrese su CVV de 3 Digitos.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" checked="checked" name="sameadr"> Mi dirección de envio es igual a la de
+                facturación
+              </label>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-6">
+                <input type="submit" value="Finalizar la compra" class="btn" onclick="return validar()">
+              </div>
+              <div class="form-group col-sm-6">
+                <a href="producto.html" value="Cancelar" class="btn">Cancelar</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  {%endif%}
+  <!-- Footer -->
+  <footer class="page-footer font-small">
+    <div class="container-fluid">
+        <ul class="list-unstyled list-inline text-right text-center">
+
+            <a href=""><img id="logo-footer" src="{% static 'pasteleria/img/logo.png'%}" alt="icon logo"></a>
+            <div class="footer-copyright text-center">
+                <a id="letra" href="#">
+                    <p>© 2021 Copyright: Pasteleria Cake House</p>
+                </a>
+            </div>
+            <li class="list-inline-item">
+                <a class="btn-floating btn-fb col-sm-1">
+                    <p><img class="img-face" src="{% static 'pasteleria/img/incon_face.png'%}" alt="icon facebook">
+                    </p>
+                </a>
+            </li>
+            <li class="list-inline-item ">
+                <a class="btn-floating btn-tw mx-1">
+                    <p><img class="img-twitter" src="{% static 'pasteleria/img/icon_twitter.png'%}"
+                            alt="icon twitter"></p>
+                </a>
+            </li>
+            <li class="list-inline-item ">
+                <a class="btn-floating btn-gplus mx-1">
+                    <p><img class="img-wha" src="{% static 'pasteleria/img/icon_wha.png'%}" alt="icon whatsapp"></p>
+                </a>
+            </li>
+            <li class="list-inline-item ">
+                <a class="btn-floating btn-li mx-1">
+                    <p><img class="img-ig" src="{% static 'pasteleria/img/icon_ig.png'%}" alt="icon instagram"></p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</footer>
+  <script src="{% static 'pasteleria/js/jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static 'pasteleria/js/menu.js' %}"></script>
+  <script src="{% static 'pasteleria/js/script.js' %}"></script>
+  <script src="{% static 'pasteleria/js/bootstrap.min.js' %}"></script>
+</body>
+
+</html

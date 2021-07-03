@@ -1,0 +1,137 @@
+body{
+  font-family: 'New Tegomin';
+  font-size: 13pt;
+  padding-top: 0%;
+  margin-top: 0%;
+  pad: 0;
+  margin: 0%;
+  background-color: #f6d1de ;
+}
+main{
+  max-width: 1600px;
+  width: 100%;
+  margin: auto;
+  padding: 10px;
+}
+  
+.m-t-menu {
+  text-align: center;
+  background:#f3a8c2;
+  border: 2px solid white;
+  border-radius: 5px;
+}
+  .menu{
+  margin-top: 20px;
+  text-align: center;
+}
+.img-r{
+  height: 20px;
+}
+.img-c{
+  height: 20px;
+}
+.img-con{
+  height: 20px;
+  }
+.letra-menu{
+  color: #000;
+}
+.letra-menu:hover{
+  text-decoration: none;
+  text-decoration-line: none;
+}
+.btn {
+  background-color: none;
+  color: rgb(0, 0, 0);
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn:hover {
+  background-color: #ff48f0;
+}
+#titulo {
+  margin-top: 5px;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #f6d1de;
+  color: #000;
+}
+#producto{
+  color: #000;
+  background-color: #f1f1f1;
+  border:solid 3px #000;
+  border-radius: 10px;
+}
+
+#imagen{
+  height: 500px;
+  border-radius: 10px;
+  border: 10px solid #f3a8c2;
+  padding: 0;
+  margin-top: 5px;
+} 
+ 
+#valor{
+  text-align: center;
+}
+
+#formulario{
+  margin: 10px;
+}
+
+.mensaje_alerta{
+  visibility: hidden;
+  background-color: transparent;
+  border: transparent;
+  color: rgb(253, 13, 13);
+  font-size: 10pt;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  
+}
+  
+  /*Footer*/
+.img-face{
+    width: 40px;
+    height: 40px;
+}
+.img-twitter{
+  width: 40px;
+  height: 40px;
+}
+.img-wha{
+  width: 40px;
+  height: 40px;
+}
+.img-ig{
+  width: 40px;
+  height: 40px;
+  
+}
+#logo-footer{
+  background-color: #f3a8c2;
+  height: 100px;
+  width: 100px;
+  padding: 10px;
+  float: left;
+}
+footer{
+  background-color:#f3a8c2;
+  border: 2px solid white;
+}
+.footer-copyright{
+  padding: 50px;
+}
+#letra{
+  color: #000;
+}
+#contra{
+  color: #000;
+}

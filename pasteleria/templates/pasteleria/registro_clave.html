@@ -19,30 +19,33 @@
     <!--MENU PAGINA-->
     <header>
         <div class="m-t-menu container-fluid">
-            <div class="row">
-                <div class="col-sm-1">
-                    <img src="{% static 'pasteleria/img/logo.png'%}" alt="Logo cake house" width="60">
-                </div>
-                <div class="menu col-sm-1">
-                    <a class="letra-menu" href="Menu.html">Menú</a>
-                </div>
-                <div class="menu col-sm-2">
-                    <a class="letra-menu" href="{% url 'pasteleria:agregar_cliente' %}">Registrar Cliente</a> <img
-                        class="img-r" src="{% static 'pasteleria/img/man-user.png'%}" alt=""></a>
-                </div>
-                <div class="menu col-sm-2">
-                    <a class="letra-menu"  href="http://localhost:8000/api/">Api-Cakehouse <img class="img-c"
-                            src="{% static 'pasteleria/img/carrito.png'%}" alt=""></a>
-                </div>
-                <div class="menu col-sm-2">
-                    <a class="letra-menu" href="">Contáctenos <img class="img-con"
-                            src="{% static 'pasteleria/img/contacto.png'%}" alt=""></a>
-                </div>
-                <h5 class=" menu card-title col-sm-2" id="dolar" class="card-text" style="float: right; "></h5>
-                <h5 class=" menu card-title col-sm-2" id="euro" class="card-text" style="float: right; "></h5>
+          <div class="row">
+            <div class="col-sm-1">
+              <img src="{% static 'pasteleria/img/logo.png' %}" alt="Logo cake house" width="60">
             </div>
+            <div class="menu col-sm-1">
+              <a class="letra-menu" href="{% url 'pasteleria:menu' %}">Menú</a>
+            </div>
+            <div class="menu col-sm-2">
+                {% if sesion %}
+                <a class="letra-menu" href="{% url 'pasteleria:cerrar_sesion' %}">{{sesion}}
+                  {% else %}
+                  <a class="letra-menu" href="{% url 'pasteleria:iniciar_sesion' %}">Login
+                    {%endif%}
+                  </a> <img class="img-r" src="{% static 'pasteleria/img/man-user.png'%}" alt=""></a>
+            </div>
+            <div class="menu col-sm-2">
+                <a class="letra-menu" href="http://localhost:8000/api/">Api-Cakehouse <img class="img-c"
+                    src="{% static 'pasteleria/img/carrito.png'%}" alt=""></a>
+            </div>
+            <div class="menu col-sm-2">
+              <a class="letra-menu" href="#">Contáctenos <img class="img-con" src="{% static 'pasteleria/img/contacto.png' %}" alt=""></a>
+            </div>
+            <h5 class=" menu card-title col-sm-2" id="dolar" class="card-text" style="float: right; "></h5>
+            <h5 class=" menu card-title col-sm-2" id="euro" class="card-text" style="float: right; "></h5>
+          </div>
         </div>
-    </header>
+      </header>
     <!--MENU PAGINA-->
 
     <!-- Grupo Contraseña -->
