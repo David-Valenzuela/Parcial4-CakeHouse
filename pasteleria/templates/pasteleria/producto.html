@@ -1,0 +1,166 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'pasteleria/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pasteleria/css/style_producto.css' %}">
+
+    <title>Cake House Registrar Usuario</title>
+    <link rel="icon" type="image/gif" href="{% static 'pasteleria/img/logo.png' %}">
+
+</head>
+
+<body>
+    <header>
+        <div class="m-t-menu container-fluid">
+          <div class="row">
+            <div class="col-sm-1">
+              <img src="{% static 'pasteleria/img/logo.png' %}" alt="Logo cake house" width="60">
+            </div>
+            <div class="menu col-sm-1">
+              <a class="letra-menu" href="">Menú</a>
+            </div>
+            <div class="menu col-sm-2">
+                {% if sesion %}
+                <a class="letra-menu" href="{% url 'pasteleria:cerrar_sesion' %}">{{sesion}}
+                  {% else %}
+                  <a class="letra-menu" href="{% url 'pasteleria:iniciar_sesion' %}">Login
+                    {%endif%}
+                  </a> <img class="img-r" src="{% static 'pasteleria/img/man-user.png'%}" alt=""></a>
+            </div>
+            <div class="menu col-sm-2">
+                <a class="letra-menu" href="http://localhost:8000/api/">Api-Cakehouse <img class="img-c"
+                    src="{% static 'pasteleria/img/carrito.png'%}" alt=""></a>
+            </div>
+            <div class="menu col-sm-2">
+              <a class="letra-menu" href="#">Contáctenos <img class="img-con" src="{% static 'pasteleria/img/contacto.png' %}" alt=""></a>
+            </div>
+            <h5 class=" menu card-title col-sm-2" id="dolar" class="card-text" style="float: right; "></h5>
+            <h5 class=" menu card-title col-sm-2" id="euro" class="card-text" style="float: right; "></h5>
+          </div>
+        </div>
+      </header>
+{% if producto %}
+     <!-- Titulo de Pastel -->
+  <div id="titulo" class="container-fluid">
+    <h1>{{producto.nombre_producto}}</h1>
+  </div>
+
+  {% if error_message %}
+  <div>
+      <h2>{{error_message}}</h2>    
+  </div>
+  {% endif %}
+  <!-- Detalle Pastel -->
+  <main>
+    
+    <div id="producto" class="card mb-3 container">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            {% if producto.id == 1%}
+            <img id="imagen" src="{% static 'pasteleria/img/Pastel_cafe2.jpeg' %}" class="card-img" alt="Pastel chocolate">
+            {% endif %}
+            {% if producto.id == 2%}
+            <img id="imagen" src="{% static 'pasteleria/img/pastel_crema.jpeg' %}" class="card-img" alt="Pastel chocolate">
+            {% endif %}
+            {% if producto.id == 3%}
+            <img id="imagen" src="{% static 'pasteleria/img/pastel_frutilla.jpeg' %}" class="card-img" alt="Pastel chocolate">
+            {% endif %}
+
+            <h4 id="valor" class="text-muted">Valor: ${{producto.precio}}/CLP</h4>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h4 class="card-title">Descripción:</h4>
+              <p class="card-text">{{producto.descripcion}}</p>
+              <h5 class="card-title">Detalles:</h5>
+              <p class="card-text">
+              <ul>
+                <li>Porciones: 15 Personas.</li>
+                <li>Almacenamiento: Conservar refrigerado.</li>
+                <li>Duración: 4 días aprox.</li>
+                <li>Elaboración: Cake House.</li>
+              </ul>
+              </p>
+              <h5 class="card-title">Ingredientes</h5>
+              <p class="card-text">Harina, Canela en Polvo, Cacao en Polvo, Café, Azucar, Esencia de Vainilla, Huevos,
+                Almendras Laminadas, Crema Pastelera y Crema de Mermelada.
+              </p>
+              <form action="{% url 'pasteleria:pago' producto.id %}" method="POST" class="container" id="pastel" onsubmit="return unidad()">
+                {% csrf_token %}
+                {% if mensaje_prod %}
+                <div id="alerta" class="alert alert-light" role="alert">
+                  {{mensaje_prod}}
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-sm-6">
+                    <label for="und">Unidades:</label>
+                    <input type="number" id="und" name="und" placeholder="0">
+                    <div id="alerta" class="alert alert-light mensaje_alerta" role="alert">
+                      Debe Ingresar desde 1 unidad hasta 5 unidades.
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <button id="comprar" type="submit" class="btn btn-outline-secondary" disabled>Comprar</button>
+                  </div>
+                  {% else %}
+                  <div class="form-group col-sm-6">
+                    <button id="comprar" type="submit" class="btn btn-outline-secondary">Comprar</button>
+                  </div>
+                </div>
+                {% endif %}
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  </main>
+
+{% endif %}
+
+    <footer class="page-footer font-small">
+      <div class="container">
+        <ul class="list-unstyled list-inline text-right text-center">
+          <img id="logo-footer" src="{% static 'pasteleria/img/logo.png' %}" alt="icon logo">
+          <div class="footer-copyright text-center">
+            <a id="letra" href="#"><p>© 2021 Copyright: Pasteleria Cake House</p></a>
+          </div>
+          <li class="list-inline-item">
+            <a class="btn-floating btn-fb col-sm-1">
+              <p><img class="img-face" src="{% static 'pasteleria/img/incon_face.png' %}" alt="icon facebook"></p>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="btn-floating btn-tw mx-1">
+              <p><img class="img-twitter" src="{% static 'pasteleria/img/icon_twitter.png' %}" alt="icon twitter"></p>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="btn-floating btn-gplus mx-1">
+              <p><img class="img-wha" src="{% static 'pasteleria/img/icon_wha.png' %}" alt="icon whatsapp"></p>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="btn-floating btn-li mx-1">
+              <p><img class="img-ig" src="{% static 'pasteleria/img/icon_ig.png' %}" alt="icon instagram"></p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+    
+    <script src="{% static 'pasteleria/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'pasteleria/js/menu.js' %}"></script>
+    <script src="{% static 'pasteleria/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'pasteleria/js/producto.js' %}"></script>
+
+</body>
+
+</html
