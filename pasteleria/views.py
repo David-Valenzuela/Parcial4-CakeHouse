@@ -10,14 +10,16 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 
 
-#views de Meni
+#views de Menu
 def menu(request):
     if request.user.is_authenticated:
         listado_producto = Producto.objects.all()
         context = {'listado_producto':listado_producto,'sesion':'Cerrar sesión'}
         return render(request,'pasteleria/menu.html',context)
     else:
-       return render(request,'pasteleria/menu.html')
+        listado_producto = Producto.objects.all()
+        context = {'listado_producto':listado_producto}
+        return render(request,'pasteleria/menu.html',context)
 
 
 def agregar_cliente(request):
@@ -192,7 +194,7 @@ def registro_clave(request):
         return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
 
 def iniciar_sesion (request):
-     return render(request,'pasteleria/iniciar_sesion.html')
+    return render(request,'pasteleria/iniciar_sesion.html')
 
 def autenticar_usuario (request):
     usuario = request.POST['rut']
