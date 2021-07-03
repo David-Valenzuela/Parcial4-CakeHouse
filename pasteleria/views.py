@@ -212,7 +212,9 @@ def cerrar_sesion(request):
     return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
 
 #Producto
-def producto(request):
+def producto(request,producto_id):
+    p = Producto.objects.get(id=producto_id)
+    context = {'producto':p}
+    return render(request,'pasteleria/pago.html',context)
     
-    return HttpResponse('hola')
     
