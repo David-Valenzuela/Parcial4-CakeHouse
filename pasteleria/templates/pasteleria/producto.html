@@ -97,9 +97,9 @@
                 {% csrf_token %}
                 {% if mensaje_prod or mensaje %}
                 <div id="alerta" class="alert alert-light" role="alert">
-                  {{mensaje_prod}}
-                  {{mensaje}} 
-                  <p>Stock disponible: {{stock}} </p>
+                  <p> {{mensaje_prod}}</p>
+                  <p> {{mensaje}} </p>
+                  <p> {{stock}} </p>
                 </div>
                 {% endif %}
                 <div class="form-row">
