@@ -25,7 +25,7 @@
           <a class="letra-menu" href="{% url 'pasteleria:menu' %}">Menú</a>
         </div>
         <div class="menu col-sm-2">
-          <a class="letra-menu" href="{% url 'pasteleria:cerrar_sesion' %}">Cerrar_sesión
+          <a class="letra-menu" href="{% url 'pasteleria:cerrar_sesion' %}">Cerrar sesión
               </a> <img class="img-r" src="{% static 'pasteleria/img/man-user.png'%}" alt=""></a>
         </div>
         <div class="menu col-sm-2">
@@ -69,7 +69,7 @@
           <h4 id="valor" class="text-muted">Valor: ${{producto.precio}}/CLP</h4>
         </div>
         <div class="col-md-8">
-          <form action="{% url 'pasteleria:ingresar_pago' %}" id="formulario" name="formulario" method="post">
+          <form action="{% url 'pasteleria:ingresar_pago' producto.id %}" id="formulario" name="formulario" method="post">
             {% csrf_token %}
             <h4><b>Datos de Envio:</b></h4>
             <div class="form-row">
@@ -187,7 +187,7 @@
                 <input type="submit" value="Finalizar la compra" class="btn" onclick="return validar()">
               </div>
               <div class="form-group col-sm-6">
-                <a href="{% url 'pasteleria:producto' %}" value="Cancelar" class="btn">Cancelar</a>
+                <a href="{% url 'pasteleria:producto' producto.id %}" value="Cancelar" class="btn">Cancelar</a>
               </div>
             </div>
           </form>

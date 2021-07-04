@@ -232,11 +232,11 @@ def pago(request,producto_id):
             p = Producto.objects.get(id=producto_id)
             cantidad = int(p.cantidad)-int(und)
             if cantidad < 0:
-                context = {'producto':p,'mensaje':'No hay Stock disponible del producto,¡Intentenlo Nuevamente!.'}
+                context = {'producto':p,'mensaje':'No hay Stock disponible del producto,¡Intentenlo Nuevamente!.','sesion':'Cerrar sesión','stock':int (p.cantidad)}
                 return render(request,'pasteleria/producto.html',context)  
             else:
                 context = {'producto':p,'cantidad':und}
-                return render(request,'pasteleria/producto.html',context)
+                return render(request,'pasteleria/pago.html',context)
         else:
             return HttpResponseRedirect(reverse('pasteleria:producto'))
     else:

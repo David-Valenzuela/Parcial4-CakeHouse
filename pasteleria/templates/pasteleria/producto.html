@@ -95,10 +95,11 @@
               </p>
               <form action="{% url 'pasteleria:pago' producto.id %}" method="POST" class="container" id="pastel" onsubmit="return unidad()">
                 {% csrf_token %}
-                {% if mensaje_prod %}
+                {% if mensaje_prod or mensaje %}
                 <div id="alerta" class="alert alert-light" role="alert">
                   {{mensaje_prod}}
-                  {{mensaje}}
+                  {{mensaje}} 
+                  <p>Stock disponible: {{stock}} </p>
                 </div>
                 {% endif %}
                 <div class="form-row">
