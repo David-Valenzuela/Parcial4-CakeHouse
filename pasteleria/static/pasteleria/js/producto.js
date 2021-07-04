@@ -1,7 +1,7 @@
 function unidad() {
     var und = document.forms["pastel"]["und"].value;
 
-    if (und < 1 || und > 5) {
+    if (und < 1 || und > 10) {
         document.getElementById("alerta").style.visibility = "visible";
         document.getElementById("und").style.border = "solid 2px red";
         return false;

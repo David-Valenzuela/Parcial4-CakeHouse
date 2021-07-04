@@ -53,9 +53,9 @@
     <h1>{{producto.nombre_producto}}</h1>
   </div>
 
-  {% if error_message %}
-  <div>
-      <h2>{{error_message}}</h2>    
+  {% if error_message or mensaje_prod or mensaje %}  
+  <div class="alert alert-secondary container" role="alert">
+    <p><img src="{% static 'pasteleria/img/danger-sing.png' %}" alt="danger.png" width="20"><b> {{error_message}}{{mensaje_prod}}{{mensaje}}</b></p>
   </div>
   {% endif %}
   <!-- Detalle Pastel -->
@@ -75,6 +75,7 @@
             {% endif %}
 
             <h4 id="valor" class="text-muted">Valor: ${{producto.precio}}/CLP</h4>
+            <h5 id="valor" class="text-muted">{{stock}}</h5>
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -95,19 +96,12 @@
               </p>
               <form action="{% url 'pasteleria:pago' producto.id %}" method="POST" class="container" id="pastel" onsubmit="return unidad()">
                 {% csrf_token %}
-                {% if mensaje_prod or mensaje %}
-                <div id="alerta" class="alert alert-light" role="alert">
-                  <p> {{mensaje_prod}}</p>
-                  <p> {{mensaje}} </p>
-                  <p> {{stock}} </p>
-                </div>
-                {% endif %}
                 <div class="form-row">
                   <div class="form-group col-sm-6">
                     <label for="und">Unidades:</label>
                     <input type="number" id="und" name="und" placeholder="0">
                     <div id="alerta" class="alert alert-light mensaje_alerta" role="alert">
-                      Debe Ingresar desde 1 unidad hasta 5 unidades.
+                      Debe Ingresar desde 1 unidad hasta 10 unidades.
                     </div>
                   </div>
                   {% if mensaje_prod %}
