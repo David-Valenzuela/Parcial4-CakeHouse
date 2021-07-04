@@ -227,13 +227,30 @@ def producto(request,producto_id):
 
 def pago(request,producto_id):
     if request.user.has_perm('pasteleria.comprador'):
+        und = request.POST['und']
+        if und != "":
+            p = Producto.objects.get(id=producto_id)
+            cantidad = int(p.cantidad)-int(und)
+            if cantidad < 0:
+                context = {'producto':p,'mensaje':'No hay Stock disponible del producto,¡Intentenlo Nuevamente!.'}
+                return render(request,'pasteleria/producto.html',context)  
+            else:
+                context = {'producto':p,'cantidad':und}
+                return render(request,'pasteleria/producto.html',context)
+        else:
+            return HttpResponseRedirect(reverse('pasteleria:producto'))
+    else:
+        p = Producto.objects.get(id=producto_id)
+        context = {'producto':p,'mensaje':'No posee los suficientes permisos para realizar esta accion.'}
+        return render(request,'pasteleria/pago.html',context)  
+
+def ingresar_pago(request,producto_id):
+    if request.user.has_perm('pasteleria.comprador'):
         p = Producto.objects.get(id=producto_id)
         context = {'producto':p,'sesion':'Cerrar sesión'}
         return render(request,'pasteleria/producto.html',context)
     else:
         p = Producto.objects.get(id=producto_id)
         context = {'producto':p,'mensaje_prod':'Debe iniciar sesión o registrarse para proceder con la compra.'}
-        return render(request,'pasteleria/producto.html',context)  
-
-    
+        return render(request,'pasteleria/producto.html',context)    
     

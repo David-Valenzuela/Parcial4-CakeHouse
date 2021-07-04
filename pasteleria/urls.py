@@ -15,4 +15,5 @@ urlpatterns = [
     path('menu', views.menu, name='menu'),
     path('<int:producto_id>', views.producto, name='producto'),
     path('<int:producto_id>/pago/', views.pago, name='pago'),
+    path('<int:producto_id>/ingresar_pago/', views.ingresar_pago, name='ingresar_pago'),
 ]

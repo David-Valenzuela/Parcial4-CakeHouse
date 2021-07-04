@@ -25,11 +25,7 @@
           <a class="letra-menu" href="{% url 'pasteleria:menu' %}">Menú</a>
         </div>
         <div class="menu col-sm-2">
-            {% if sesion %}
-            <a class="letra-menu" href="{% url 'pasteleria:cerrar_sesion' %}">{{sesion}}
-              {% else %}
-              <a class="letra-menu" href="{% url 'pasteleria:iniciar_sesion' %}">Login
-                {%endif%}
+          <a class="letra-menu" href="{% url 'pasteleria:cerrar_sesion' %}">Cerrar_sesión
               </a> <img class="img-r" src="{% static 'pasteleria/img/man-user.png'%}" alt=""></a>
         </div>
         <div class="menu col-sm-2">
@@ -44,7 +40,7 @@
       </div>
     </div>
   </header>
-  {%if producto%}
+  {%if producto and cantidad%}
   <!-- Titulo de Pastel -->
   <div id="titulo" class="container-fluid">
     <h1>Proceso de Pago</h1>
@@ -187,10 +183,11 @@
             </div>
             <div class="form-row">
               <div class="form-group col-sm-6">
+                <input type="hidden" name="cantidad" value="{{cantidad}}" >
                 <input type="submit" value="Finalizar la compra" class="btn" onclick="return validar()">
               </div>
               <div class="form-group col-sm-6">
-                <a href="producto.html" value="Cancelar" class="btn">Cancelar</a>
+                <a href="{% url 'pasteleria:producto' %}" value="Cancelar" class="btn">Cancelar</a>
               </div>
             </div>
           </form>
