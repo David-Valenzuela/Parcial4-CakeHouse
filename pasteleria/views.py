@@ -216,7 +216,7 @@ def cerrar_sesion(request):
 
 #Producto
 def producto(request,producto_id):
-    if request.user.has_perm('pasteleria.comprador'):
+    if request.user.is_authenticated:
         p = Producto.objects.get(id=producto_id)
         context = {'producto':p,'sesion':'Cerrar sesión'}
         return render(request,'pasteleria/producto.html',context)
