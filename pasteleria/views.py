@@ -2,7 +2,7 @@ from datetime import time
 from django import http
 from django.shortcuts import render
 from django.http import HttpResponse, response, HttpResponseRedirect
-from pasteleria.models import Ciudad, Cliente, Comuna, Producto
+from pasteleria.models import Ciudad, Cliente, Comuna, Producto, Pago
 from django.contrib.auth.models import Permission, User
 from django.utils import timezone
 from django.urls import reverse
@@ -246,37 +246,40 @@ def pago(request,producto_id):
                 
     else:
         return HttpResponseRedirect(reverse('pasteleria:producto'))
-    """""
-    if request.user.has_perm('pasteleria.comprador'):
-        und = request.POST['und']
-        if und != "":
-            p = Producto.objects.get(id=producto_id)
-            cantidad = int(p.cantidad)-int(und)
-            if cantidad < 0:
-                context = {'producto':p,'mensaje':'No hay Stock disponible del producto,¡Intentenlo Nuevamente!.','sesion':'Cerrar sesión','stock':int (p.cantidad)}
-                return render(request,'pasteleria/producto.html',context)  
-            else:
-                context = {'producto':p,'cantidad':und}
-                return render(request,'pasteleria/pago.html',context)
-        else:
-            return HttpResponseRedirect(reverse('pasteleria:producto'))
-    else:
-        p = Producto.objects.get(id=producto_id)
-        context = {'producto':p,'sesion':'Cerrar sesión', 'mensaje':'No posee los suficientes permisos para realizar esta accion.'}
-        return render(request,'pasteleria/pago.html',context)
-        #return HttpResponseRedirect(reverse('pasteleria:pago_denegado',producto_id))
-      """""
+
        
 
 def ingresar_pago(request,producto_id):
-    if request.user.has_perm('pasteleria.comprador'):
+    p = Producto.objects.get(id=producto_id)
+    run = request.user.username
+    nombre = request.POST['nombre'].strip()
+    ap_paterno = request.POST['paterno'].strip()
+    ap_materno = request.POST['materno'].strip()
+    direccion = request.POST['direccion'].strip()
+    num_direc = request.POST['num'].strip()
+    celular = request.POST['celular'].strip()
+    email = request.POST['email'].strip()
+    cardnumber = request.POST['cardnumber']
+    expmonth =  request.POST['expmonth']
+    expyear = request.POST['expyear']
+    cvv = request.POST['cvv']
+    cantidad = request.POST['cantidad']
+
+    if cantidad != '':
+        cli = Cliente.objects.get(run_cliente = run)
+        pago = Pago(nombre_cliente = nombre, ap_paterno_cliente = ap_paterno, ap_materno_cliente = ap_materno, email_cliente = email, celular_cliente= celular,
+        direccion_cliente = direccion, numeracion_clietne = num_direc, numero_tarjeta =  cardnumber, mes_expiracion = expmonth, anno_exiparacion = expyear, cvv = cvv )
+        pago.producto = p
+        pago.run_cliente = cli
+        stock = int(p.cantidad) - int(cantidad)
+        p.cantidad = stock 
+        p.save() 
+        pago.save()
+        return HttpResponseRedirect(reverse('pasteleria:menu'))
+    else:
         p = Producto.objects.get(id=producto_id)
         context = {'producto':p,'sesion':'Cerrar sesión'}
         return render(request,'pasteleria/producto.html',context)
-    else:
-        p = Producto.objects.get(id=producto_id)
-        context = {'producto':p,'mensaje_prod':'Debe iniciar sesión o registrarse para proceder con la compra.'}
-        return render(request,'pasteleria/producto.html',context)    
 
 def pago_denegado(request,producto_id):
     p = Producto.objects.get(id=producto_id)
