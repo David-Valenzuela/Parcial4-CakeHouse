@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 
 
-#views de Menu
+#MENU PRINCIPAL
 def menu(request):
     if request.user.is_authenticated:
         listado_producto = Producto.objects.all()
@@ -21,13 +21,14 @@ def menu(request):
         context = {'listado_producto':listado_producto}
         return render(request,'pasteleria/menu.html',context)
 
-
+#AGRERGAR CLIENTE
 def agregar_cliente(request):
     listado_comuna = Comuna.objects.all()
     listado_ciudad = Ciudad.objects.all()
     context = {'comunas':listado_comuna,'ciudades':listado_ciudad}
     return render(request,'pasteleria/agregar_cliente.html',context)
 
+#REGISTRAR DATOS DEL CLIENTE
 def registrar_datos(request):
     listado_comuna = Comuna.objects.all()
     listado_ciudad = Ciudad.objects.all()
@@ -167,36 +168,44 @@ def registro_clave(request):
                 return render(request, 'pasteleria/registro_clave.html',context) 
             else:
                 cliente.save()
-                permiso = Permission.objects.get(name='Es comprador')
+                permiso1 = Permission.objects.get(name='Es comprador')
+                permiso2 = Permission.objects.get(name='Can view producto')
                 user = User.objects.create_user(run,email,password1)
                 user.first_name = nombre
                 user.last_name = paterno
-                user.user_permissions.add(permiso)
+                user.user_permissions.add(permiso1,permiso2)
+                user.is_staff = True
                 user.save()
                 return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
         else:
             cliente.save()
-            permiso = Permission.objects.get(name='Es comprador')
+            permiso1 = Permission.objects.get(name='Es comprador')
+            permiso2 = Permission.objects.get(name='Can view producto')   
             user = User.objects.create_user(run,email,password1)
             user.first_name = nombre
             user.last_name = paterno
-            user.user_permissions.add(permiso)
+            user.user_permissions.add(permiso1,permiso2)
+            user.is_staff = True
             user.save()
             return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
     else:
         cliente.save()
-        permiso = Permission.objects.get(name='Es comprador')
+        permiso1 = Permission.objects.get(name='Es comprador')
+        permiso2 = Permission.objects.get(name='Can view producto')
         user = User.objects.create_user(run,email,password1)
         user.first_name = nombre
         user.last_name = paterno
-        user.user_permissions.add(permiso)
+        user.user_permissions.add(permiso1,permiso2)
+        user.is_staff = True
         user.save()
         return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
 
+#Iniciar Sesion
 def iniciar_sesion (request):
     logout(request)
     return render(request,'pasteleria/iniciar_sesion.html')
 
+#AUTENTICAR USUARIO
 def autenticar_usuario (request):
     usuario = request.POST['rut']
     clave= request.POST['password']
@@ -209,12 +218,12 @@ def autenticar_usuario (request):
     else:
         return render(request, 'pasteleria/iniciar_sesion.html', {
             'error_message': "Rut o Contraseña incorrectos"}) 
-
+#CERRAR SESION
 def cerrar_sesion(request):
     logout(request)
     return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
 
-#Producto
+#PRODUCTO
 def producto(request,producto_id):
     if request.user.is_authenticated:
         p = Producto.objects.get(id=producto_id)
@@ -225,6 +234,7 @@ def producto(request,producto_id):
         context = {'producto':p,'mensaje_prod':'Debe iniciar sesión o registrarse para proceder con la compra.'}
         return render(request,'pasteleria/producto.html',context)  
 
+#PAGO
 def pago(request,producto_id):
     und = request.POST['und']
     stock = ''
@@ -246,9 +256,8 @@ def pago(request,producto_id):
                 
     else:
         return HttpResponseRedirect(reverse('pasteleria:producto'))
-
-       
-
+  
+#INSERTAR PAGO
 def ingresar_pago(request,producto_id):
     p = Producto.objects.get(id=producto_id)
     run = request.user.username
@@ -281,6 +290,7 @@ def ingresar_pago(request,producto_id):
         context = {'producto':p,'sesion':'Cerrar sesión'}
         return render(request,'pasteleria/producto.html',context)
 
+#PAGO DENEGADO
 def pago_denegado(request,producto_id):
     p = Producto.objects.get(id=producto_id)
     context = {'producto':p,'sesion':'Cerrar sesión', 'mensaje':'No posee los suficientes permisos para realizar esta accion.'}
