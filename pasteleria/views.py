@@ -194,6 +194,7 @@ def registro_clave(request):
         return HttpResponseRedirect(reverse('pasteleria:iniciar_sesion'))
 
 def iniciar_sesion (request):
+    logout(request)
     return render(request,'pasteleria/iniciar_sesion.html')
 
 def autenticar_usuario (request):
