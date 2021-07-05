@@ -13,8 +13,10 @@ urlpatterns = [
     path('registro_clave', views.registro_clave, name='registro_clave'),
 
     path('menu', views.menu, name='menu'),
+    path('menu_denegado', views.menu_denegado, name='menu_denegado'),
     path('<int:producto_id>', views.producto, name='producto'),
     path('<int:producto_id>/pago/', views.pago, name='pago'),
     path('<int:producto_id>/ingresar_pago/', views.ingresar_pago, name='ingresar_pago'),
     path('<int:producto_id>/pago_denegado/', views.pago_denegado, name='pago_denegado'),
+   
 ]

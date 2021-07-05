@@ -21,6 +21,13 @@ def menu(request):
         context = {'listado_producto':listado_producto}
         return render(request,'pasteleria/menu.html',context)
 
+def menu_denegado(request):
+    logout(request)
+    listado_producto = Producto.objects.all()
+    context = {'listado_producto':listado_producto}
+    return render(request,'pasteleria/menu.html',context)
+
+
 #AGRERGAR CLIENTE
 def agregar_cliente(request):
     listado_comuna = Comuna.objects.all()
