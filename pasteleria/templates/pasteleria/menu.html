@@ -151,7 +151,7 @@
             </div>
             <div class="card-footer">
              <small>
-               <form action="{% url 'pasteleria:producto' p.id %}">
+               <form action="{% url 'pasteleria:producto' p.id %}" method="POST">
                 {% csrf_token %}
                 {% if p.cantidad == 0 %}
                 <div id="alerta" class="alert alert-danger" role="alert">

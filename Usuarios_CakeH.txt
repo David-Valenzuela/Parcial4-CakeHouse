@@ -1,0 +1,11 @@
+Usuario Administrador : admin_Cake
+Clave: Cak3Hous32021
+
+Usuario con permiso de "Es comprador": 19364017-6
+Clave: claudiopinto
+
+Usuario con permiso de "Es comprador y view_producto":24646930-K
+Clave: roberto14
+
+Usuario sin permiso: 16437660-5
+Clave: cris1234
