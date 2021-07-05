@@ -245,7 +245,13 @@ def producto(request,producto_id):
 def pago(request,producto_id):
     und = request.POST['und']
     stock = ''
-    if request.user.username != 'admin_Cake':
+    usuario = request.user.username
+    estado = False
+    cliente = Cliente.objects.all()
+    for c in cliente: 
+        if usuario == c.run_cliente:
+            estado = True
+    if estado == True:
         if und != "":
             p = Producto.objects.get(id=producto_id)
             cantidad = int(p.cantidad)-int(und)
@@ -266,7 +272,7 @@ def pago(request,producto_id):
             return HttpResponseRedirect(reverse('pasteleria:producto'))
     else:
         p = Producto.objects.get(id=producto_id)
-        context = {'producto':p,'sesion':'Cerrar sesión', 'mensaje':'No posee los suficientes permisos para realizar esta accion, ya que no posee un rut para generar la compra.'}
+        context = {'producto':p,'sesion':'Cerrar sesión', 'mensaje':'No posee los suficientes permisos para realizar esta accion. Debe registrarse para proceder con la compra.'}
         return render(request,'pasteleria/pago_denegado.html',context)
 #INSERTAR PAGO
 def ingresar_pago(request,producto_id):
